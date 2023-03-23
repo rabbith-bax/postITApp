@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Note } from './note';
 import { NoteService } from './note.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { NgForm } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddNoteComponent } from './add-note/add-note.component';
+import { EditNoteComponent } from './edit-note/edit-note.component';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +13,15 @@ import { NgForm } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
   public notes: Note[] = [];
-  public editNote!: Note ;
   
-  constructor(private noteService: NoteService){}
+  constructor(private noteService: NoteService, private modalService: NgbModal){}
 
   ngOnInit() {
       this.getNotes();
+  }
+
+  public openAddNoteModal() {
+    this.modalService.open(AddNoteComponent)
   }
 
   public getNotes(): void {
@@ -30,48 +35,8 @@ export class AppComponent implements OnInit {
     )
   }
 
-  public onAddNote(addForm: NgForm): void {
-    document.getElementById("close-add-modal")?.click();
-    this.noteService.addNote(addForm.value).subscribe(
-      (response: Note) => {
-        console.log(response);
-        this.getNotes();
-        addForm.reset();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-        addForm.reset();
-      }
-    );
-  }
-
-  public onUpdateNote(note: Note): void {
-    document.getElementById("close-edit-modal")?.click();
-    this.noteService.updateNote(note).subscribe(
-      (response: Note) => {
-        console.log(response);
-        this.getNotes();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-      }
-    );
-  }
-
-  public onDeleteNote(noteId: number): void {
-    document.getElementById("close-edit-modal")?.click();
-    this.noteService.deleteNote(noteId).subscribe(
-      (response: void) => {
-        console.log(response);
-        this.getNotes();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message)
-      }
-    );
-  }
-
-  public onOpenEditModal(note: Note): void {
-    this.editNote = note;
+  public openEditNoteModal(note: Note): void {
+    const modalRef = this.modalService.open(EditNoteComponent)
+    modalRef.componentInstance.editNote = note;
   }
 }

@@ -1,0 +1,22 @@
+<form #addForm="ngForm">
+  <textarea
+    class="note-content"
+    name="content"
+    ngModel
+    minlength="0"
+    maxlength="200"
+    placeholder="Add a new note"
+  ></textarea>
+  <div class="modal-footer">
+    <button (click)="onAddNote(addForm)" class="btn btn-info">Add</button>
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      aria-label="Close"
+      id="close-add-modal"
+      (click)="activeModal.dismiss()"
+    >
+      Dismiss
+    </button>
+  </div>
+</form>

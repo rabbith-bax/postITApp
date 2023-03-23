@@ -1,0 +1,31 @@
+<form #editForm="ngForm">
+  <input type="hidden" name="id" ngModel="{{ editNote.id }}" />
+  <textarea
+    name="content"
+    ngModel="{{ editNote.content }}"
+    class="note-content"
+    minlength="0"
+    maxlength="200"
+  ></textarea>
+  <div class="modal-footer">
+    <button (click)="onUpdateNote(editForm.value)" class="btn btn-info">
+      Save
+    </button>
+    <button
+      (click)="onDeleteNote(editNote.id)"
+      class="btn btn-danger"
+      data-bs-dismiss="modal"
+    >
+      Delete
+    </button>
+    <button
+      type="button"
+      class="btn btn-outline-danger"
+      aria-label="Close"
+      id="close-edit-modal"
+      (click)="activeModal.dismiss()"
+    >
+      Dismiss
+    </button>
+  </div>
+</form>

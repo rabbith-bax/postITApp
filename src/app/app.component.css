@@ -1,0 +1,23 @@
+.note-content {
+    width: 200px;
+    height: 200px;
+    background-color: lightgoldenrodyellow;
+    padding: 20px;
+    margin: 20px;
+    border-bottom: 3px;
+    box-shadow: 5px 5px 5px rgba(0,0,0,0.2);
+    transform: rotate(2deg);
+    transform: perspective(100px) rotateX(2deg);
+}
+
+@media (max-width:767.98px) {
+     .note-has-grid .single-note-item {
+         max-width: 100%;
+     }
+ }
+
+ @media (max-width:991.98px) {
+     .note-has-grid .single-note-item {
+         max-width: 216px
+     }
+ }
