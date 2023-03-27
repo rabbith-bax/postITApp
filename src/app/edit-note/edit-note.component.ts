@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Note } from '../note';
 import { NoteService } from '../note.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -12,6 +12,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class EditNoteComponent {
   @Input()
   editNote!: Note;
+  @Output() noteUpdated = new EventEmitter();
 
   constructor(private noteService: NoteService, public activeModal: NgbActiveModal){}
 
@@ -20,6 +21,7 @@ export class EditNoteComponent {
     this.noteService.updateNote(note).subscribe(
       (response: Note) => {
         console.log(response);
+        this.noteUpdated.emit();
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
@@ -32,6 +34,7 @@ export class EditNoteComponent {
     this.noteService.deleteNote(noteId).subscribe(
       (response: void) => {
         console.log(response);
+        this.noteUpdated.emit();
       },
       (error: HttpErrorResponse) => {
         alert(error.message)

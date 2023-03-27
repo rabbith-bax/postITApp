@@ -21,7 +21,9 @@ export class AppComponent implements OnInit {
   }
 
   public openAddNoteModal() {
-    this.modalService.open(AddNoteComponent)
+    this.modalService.open(AddNoteComponent).componentInstance.noteAdded.subscribe(() => {
+      this.getNotes();
+    });
   }
 
   public getNotes(): void {
@@ -38,5 +40,8 @@ export class AppComponent implements OnInit {
   public openEditNoteModal(note: Note): void {
     const modalRef = this.modalService.open(EditNoteComponent)
     modalRef.componentInstance.editNote = note;
+    modalRef.componentInstance.noteUpdated.subscribe(() => {
+      this.getNotes();
+    })
   }
 }

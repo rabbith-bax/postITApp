@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { NoteService } from '../note.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -12,6 +12,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class AddNoteComponent {
+  @Output() noteAdded = new EventEmitter();
   constructor(private noteService: NoteService, public activeModal: NgbActiveModal){}
 
   public onAddNote(addForm: NgForm): void {
@@ -20,6 +21,7 @@ export class AddNoteComponent {
       (response: Note) => {
         console.log(response);
         addForm.reset();
+        this.noteAdded.emit();
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
